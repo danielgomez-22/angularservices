@@ -16,11 +16,24 @@ export class PersonasApiComponent implements OnInit {
     private _service: ServicePersonas 
   ) {}
 
-  ngOnInit(): void {
-    this._service.getPersonas().subscribe((response) => {
-      console.log('leyendo personas')
-      this.personas = response;
+  async ngOnInit(): Promise<void> {
+    this.personas = await this._service.getPersonasAsync();
+    try{
+      console.log('dentrooooo ');
       this._cdr.detectChanges();
-    });
+    }catch(error){
+      console.log('error en el api: ', error);
+    }
+
+    //this._service.getpersonas().subcribe({
+      //next: (response) => {
+        //this.personas = response;
+        //this._cdr.detectChanges();
+
+     // }, error: (error) => {
+       // console.log('error en el api: ', error);
+      //}
+   // })
+    
   }
 }

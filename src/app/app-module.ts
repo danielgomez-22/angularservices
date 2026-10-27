@@ -8,15 +8,18 @@ import { provideHttpClient } from '@angular/common/http';
 import { PersonasApiComponent } from './components/personas-api-component/personas-api-component';
 import { ServicePersonas } from './services/service.personas';
 import { MenuComponent } from './components/menu-component/menu-component';
+import { ServiceCoches } from './services/service.coches';
+import { CochesApiComponent } from './components/coches-api-component/coches-api-component';
 
 @NgModule({
-  declarations: [App, ComicsComponent, PersonasApiComponent, MenuComponent],
+  declarations: [App, ComicsComponent, PersonasApiComponent, MenuComponent, CochesApiComponent],
   imports: [BrowserModule, AppRoutingModule],
   providers: [
     provideBrowserGlobalErrorListeners(),
     ServiceComics,
     provideHttpClient(),
     ServicePersonas,
+    ServiceCoches,
   ],
   bootstrap: [App],
 })
