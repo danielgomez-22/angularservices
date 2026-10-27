@@ -7,21 +7,29 @@ import { environment } from '../../environments/environment.development';
 
 @Injectable()
 export class ServicePlantilla {
-    constructor(private _http: HttpClient) {
+    constructor(private _http: HttpClient){}
 
+    getFuncionesPlantilla(): Observable<any> {
+        let url = environment.urlApiPlantilla;
+        let request = "api/plantilla/funciones"
+        return this._http.get(url + request);
     }
 
-    async getPlantillaAsync(): Promise<string[]> {
-        let urlApi = environment.urlApiPlantilla;
-        let request = "api/Plantilla/Funciones";
-        return firstValueFrom(this._http.get<string[]>(urlApi + request));   
-        
+    async getPlantillaByFuncionAsync(funcion: string): Promise<Plantilla[]> {
+        let url = environment.urlApiPlantilla;
+        let request = "api/plantilla/plantillafuncion/" + funcion;
+        return firstValueFrom(this._http.get<Plantilla[]>(url + request));
     }
 
-    async getTodosLosEmpleadosAsync(): Promise<Plantilla[]> {
-        let urlApi = environment.urlApiPlantilla;
-        let request = "api/Plantilla";
-        return firstValueFrom(this._http.get<Plantilla[]>(urlApi + request));
-    }   
-
+    async getPlantillaFunciones(funciones: Array<string>): Promise<Plantilla[]> {
+        //funcion=Enfermera&funcion=Enfermero
+        let content = ""        ;
+        for (let fun of funciones ){
+            content += "funcion=" + fun + "&";
+        }
+        content = content.substring(0, content.length - 1);
+        let url = environment.urlApiPlantilla;
+        let request = "api/plantilla/plantillafunciones?" + content;
+        return firstValueFrom(this._http.get<Plantilla[]>(url + request));
+    }
 }
